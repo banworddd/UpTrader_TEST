@@ -1,0 +1,22 @@
+<ul class="menu">
+    {% for item in items %}
+    <li class="{% if item.is_active %}active{% endif %}">
+        <a href="{{ item.get_absolute_url }}">{{ item.name }}</a>
+        {% if item.children.exists and item.is_active %}
+        <ul>
+            {% for child in item.children.all %}
+            <li class="{% if child.is_active %}active{% endif %}">
+                <a href="{{ child.get_absolute_url }}">{{ child.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+
+<style>
+.menu ul { display: none; margin-left: 15px; }
+.menu .active > ul { display: block; }
+.menu .active > a { font-weight: bold; color: #d63384; }
+</style>
